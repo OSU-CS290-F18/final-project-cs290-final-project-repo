@@ -8,7 +8,7 @@ app.engine('handlebars', exphb({defaultLayout: 'default'}));
 app.set('view engine', 'handlebars');
 
 //Serving up those static files
-app.use('/assets', express.static('assets'));
+app.use('/public', express.static('public'));
 
 app.get('/', function(req, res){
   res.statuscode = 200;
