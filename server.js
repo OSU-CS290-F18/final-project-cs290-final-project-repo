@@ -7,6 +7,9 @@ var port = process.env.PORT || 3000;
 app.engine('handlebars', exphb({defaultLayout: 'default'}));
 app.set('view engine', 'handlebars');
 
+//Serving up those static files
+app.use('/assets', express.static('assets'));
+
 app.get('/', function(req, res){
   res.statuscode = 200;
   res.render('start');
