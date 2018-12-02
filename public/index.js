@@ -11,6 +11,7 @@ function FlipCard(event){
             el = el.parentElement;
         };
     }
+    "test"
     image = el.children[0].children[0];
 
     //src adds http://localhost:3000/ to the value
