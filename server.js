@@ -8,24 +8,38 @@ app.engine('handlebars', exphb({defaultLayout: 'default'}));
 app.set('view engine', 'handlebars');
 
 //Serving up those static files
-app.use('/public', express.static('public'));
+app.use(express.static('public'));
 
+//Default handler
 app.get('/', function(req, res){
   res.statuscode = 200;
   res.render('start');
 });
 
+//Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
-    res.render('game');
+
+  /*Card Generation Section*/
+  var ar = [{   //ar is an array of info for the cards, hardcoded for now
+    url: "/house.jpg",
+    id: "card1"   //id could be used to track if two of the same card are flipped
+  },
+  {
+    url: "/house.jpg",
+    id: "card2"
+  }];
+
+  res.render('game', {
+    cardInfo: ar
+  });
 });
 
+//404 handler
 app.get('*', function (req, res) {
   res.statusCode = 404;
   res.render('404');
 });
-
-
 
 
 app.listen(port, function () {
