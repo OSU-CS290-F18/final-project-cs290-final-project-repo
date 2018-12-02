@@ -1,6 +1,11 @@
 # IMPORTANT
 You have to run `npm install` before starting the server. 
 
+# Todo:
+Write html for individual cards
+Structure the game html/css
+Javascript up the game
+
 # Style
 For the sylesheets, it's much easier to use them with layouts/templates if we just have one style file
 
