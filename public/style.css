@@ -22,10 +22,16 @@ while a flipped one has an image a little ways 'inside' the card */
     height: 300px;
     width: 150px;
 }
-.cardPhoto img{
+.card.flipped img{
     max-height: 300px;
     max-width: 150px;
 }
+
+.card img{
+    max-height: 350px;
+    max-width: 200px;
+}
+
 
 #start-box-container {
     position: fixed;
