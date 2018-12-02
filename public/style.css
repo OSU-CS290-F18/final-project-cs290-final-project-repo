@@ -2,6 +2,31 @@ body{
     margin: 0%;
 }
 
+.cardContainer{
+    padding: 50px;
+    display: block;
+}
+.card{
+    display: inline-block;
+    vertical-align: top;
+    height: 350px;
+    width: 200px; 
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+/*the .flipped class adds padding to a card, so that an unflipped card is just the cardback image, 
+while a flipped one has an image a little ways 'inside' the card */
+.card.flipped{
+    padding: 25px; 
+    height: 300px;
+    width: 150px;
+}
+.cardPhoto img{
+    max-height: 300px;
+    max-width: 150px;
+}
+
 #start-box-container {
     position: fixed;
     width: 100%;
