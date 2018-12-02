@@ -43,8 +43,9 @@ while a flipped one has an image a little ways 'inside' the card */
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #ccc;
+    background-color: rgba(204, 204, 204, 0.5);
     border-radius: 3px;
+    
 
     border: 4px solid #333333;
     text-align: center;     
@@ -90,5 +91,5 @@ button:hover {
     margin: 10px 10px auto 10px;
     padding: 20px;
     border-radius: 3px;
-    background-color: rgba(239,239,239,0.37);
+    background-color: rgba(239,239,239,.5);
   }
