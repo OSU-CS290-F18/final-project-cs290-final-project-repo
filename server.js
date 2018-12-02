@@ -42,18 +42,20 @@ app.get('/game', function(req, res) {
   res.statusCode = 200;
 
   /*Card Generation Section*/
+  var num_cards = 4;
+  var num_flips = 2;
   var ar = [];  
   var i = 0;
   var photoUrls = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
-  var random = GenerateRand(4,4); //four possible choices and a length of four
+  var random = GenerateRand(num_cards * num_flips, num_cards * num_flips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
 
-  while(parseInt(i) < 4){ //create an array with randomly arranged photos
+  while(parseInt(i) < num_cards*num_flips){ //create an array with randomly arranged photos
     ar.push({
-      url: photoUrls[random[i]],
-      id: "card" + i,
+      url: photoUrls[Math.floor(random[i]/num_flips)],
+      id: "card" + Math.floor(random[i]/num_flips),
       cardback: "Cardback.jpg"
     });
-    i = i + 1;  
+    i++;  
   }
 
   res.render('game', {
