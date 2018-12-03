@@ -5,11 +5,15 @@ var matchCounter = 0; //How many card pairs have been matched
 var flippedArray = []; //the cards during each reset period that were flipped so far
 var cardCounter  = 0;  //counts the number of cards turned before a reset
 
+var congrats = document.getElementById('congratulations-modal');//grabs congratulation pop up html contnent
+
 //Copied sleep function from flaviocopes.com
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
+
+//Checks if the cards selected are a match.  If not, reset them
 function checkPair() {
     var check = flippedArray[0].getAttribute('data_post_id');
     for(var i = 0; i < numFlips; i++) {
@@ -25,6 +29,10 @@ function checkPair() {
     matchCounter++;
     for (var i = 0; i < numFlips; i++) {
         flippedArray.shift();
+    }
+
+    if (matchCounter >= numCards) {//check if all cards have been flipped and displays congratulations modal
+        congrats.classList.toggle('hidden');
     }
 }
 
@@ -59,14 +67,11 @@ function FlipCard(event){
     cardCounter++;
     flippedArray.push(el);
     
-    if (cardCounter%numFlips === 0) {
+    if (cardCounter%numFlips === 0) {//if they have flipped the max number of cards in a sequence, check those cards
         sleep(700).then(() => {
             checkPair();
         });
-    }   
-    if (matchCounter >= numCards) {
-        //display congratulations play again modal
-    }
+    }  
 }
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -74,4 +79,10 @@ window.addEventListener('DOMContentLoaded', function () {
     if(posts){
         posts.addEventListener('click', FlipCard);
     }
+
+    var closeCongratsModal = document.getElementById('congratulations-modal-close');//closes congratulations modal upon clicking exit
+    closeCongratsModal.addEventListener('click', function(event) {
+        congrats.classList.toggle('hidden');
+    });
+
 });
