@@ -5,6 +5,7 @@ write down what you plan to do within the next day or few hours under the todo s
 # Todo
 Tomorrow: Sidebar or customization (If no one claims either by the time I start working, I'll porbably start sidebar) - Josiah
 
+Monday, 12/3: Work on server communication with MongoDB -Cole
 
 # Ideas
 Post Your Ideas As You Get Them:
