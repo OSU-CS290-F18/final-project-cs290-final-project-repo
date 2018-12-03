@@ -142,6 +142,7 @@ while a flipped one has an image a little ways 'inside' the card */
 
   .cardContainer {
     margin-left: 160px;
+    padding-right: 20px;
   }
 
   .card.darkened img{
