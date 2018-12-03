@@ -6,6 +6,8 @@ var flippedArray = []; //the cards during each reset period that were flipped so
 var cardCounter  = 0;  //counts the number of cards turned before a reset
 var running = 0; //running makes sure the FlipCard function is only run once the previous one finishes(otherwise it can result in issues with the enlarge/darkening)
 
+var congrats = document.getElementById('congratulations-modal');//grabs congratulation pop up html contnent
+
 //Copied sleep function from flaviocopes.com
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -50,6 +52,10 @@ async function checkPair() {
     for (var i = 0; i < numFlips; i++) {
         flippedArray.shift();
     }
+
+    if (matchCounter >= numCards) {//check if all cards have been flipped and displays congratulations modal
+        congrats.classList.toggle('hidden');
+    }
 }
 
 async function FlipCard(event){
@@ -73,30 +79,24 @@ async function FlipCard(event){
             return;
         }
 
-        image = el.children[0].children[0];
-
-        //If face up, flip card face down
-        if(image.src === "http://localhost:3000/" + el.getAttribute('data_url')){
-            image.src = "Cardback.jpg";
-        }
-        //If face down, flip card face up
-        else{
-            image.src = el.getAttribute('data_url');
-        }
-        el.classList.toggle("flipped");
-        cardCounter++;
-        flippedArray.push(el);
-        
-        if (cardCounter%numFlips === 0) {
-            await sleep(700).then(() => {
-                checkPair();
-            });
-        }   
-        if (matchCounter >= numCards) {
-            modal = document.getElementById('win_modal');
-            modal.classList.toggle('hidden');
-        }
+    image = el.children[0].children[0];
+    //If face up, flip card face down
+    if(image.src === "http://localhost:3000/" + el.getAttribute('data_url')){
+        image.src = "Cardback.jpg";
     }
+    //If face down, flip card face up
+    else{
+        image.src = el.getAttribute('data_url');
+    }
+    el.classList.toggle("flipped");
+    cardCounter++;
+    flippedArray.push(el);
+    
+    if (cardCounter%numFlips === 0) {//if they have flipped the max number of cards in a sequence, check those cards
+        await sleep(700).then(() => {
+            checkPair();
+        });
+    }  
     running = 0;
 }
 window.addEventListener('DOMContentLoaded', function () {
@@ -104,4 +104,10 @@ window.addEventListener('DOMContentLoaded', function () {
     if(posts){
         posts.addEventListener('click', FlipCard);
     }
+
+    var closeCongratsModal = document.getElementById('congratulations-modal-close');//closes congratulations modal upon clicking exit
+    closeCongratsModal.addEventListener('click', function(event) {
+        congrats.classList.toggle('hidden');
+    });
+
 });
