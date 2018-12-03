@@ -15,15 +15,17 @@ function checkPair() {
     for(var i = 0; i < numFlips; i++) {
         if (check != flippedArray[i].getAttribute('data_post_id')) {//check if any ids don't match
             for (var j = 0; j < numFlips; j++) {//flip cards back over if not
-                flippedArray[j].classList.toggle('flipped');
-                flippedArray[j].children[0].children[0].src = "Cardback.jpg";
+                flippedArray[0].classList.toggle('flipped');
+                flippedArray[0].children[0].children[0].src = "Cardback.jpg";
+                flippedArray.shift();
             }
-            flippedArray = [];
             return;
         }
     }
     matchCounter++;
-    flippedArray = [];
+    for (var i = 0; i < numFlips; i++) {
+        flippedArray.shift();
+    }
 }
 
 function FlipCard(event){
