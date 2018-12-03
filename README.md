@@ -1,4 +1,4 @@
-#Important Please Read
+# Important Please Read
 So we don't accidentally start working on the same things causing pointless work and wasted time like we did with the win modal, 
 write down what you plan to do within the next day or few hours under the todo section, so we know who plans on doing what.
 
