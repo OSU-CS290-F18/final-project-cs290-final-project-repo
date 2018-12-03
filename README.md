@@ -7,6 +7,15 @@ Tomorrow: Sidebar or customization (If no one claims either by the time I start 
 
 Monday, 12/3: Work on server communication with MongoDB -Cole
 
+# Mongo Setup
+The server expects the mongo database to have an `images` collection, which can be setup by running 
+`db.images.insertMany([{url:"1.jpg", default:"true", description:"An image of the number one", id:"photo1"},{url:"2.jpg", default:"true", description:"An image of the number two", id:"photo2"},{url:"3.jpg", default:"true", description:"An image of the number three", id:"photo3"},{url:"4.jpg", default:"true", description:"An image of the number four", id:"photo4"}]);`
+in the mongo shell
+
+Likewise, the server expects the environment variables `MUSER` and `MPASSWORD` to be set, and they should be your mongo username and password. 
+
+You can set these in the windows command prompt with `set VAR=VALUE` or in unix with `export VAR=VALUE`
+
 # Ideas
 Post Your Ideas As You Get Them:
 
