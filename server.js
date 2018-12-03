@@ -42,17 +42,17 @@ app.get('/game', function(req, res) {
   res.statusCode = 200;
 
   /*Card Generation Section*/
-  var num_cards = 4;
-  var num_flips = 2;
+  var numCards = 4;
+  var numFlips = 2;
   var ar = [];  
   var i = 0;
   var photoUrls = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
-  var random = GenerateRand(num_cards * num_flips, num_cards * num_flips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+  var random = GenerateRand(numCards * numFlips, numCards * numFlips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
 
-  while(parseInt(i) < num_cards*num_flips){ //create an array with randomly arranged photos
+  while(parseInt(i) < numCards*numFlips){ //create an array with randomly arranged photos
     ar.push({
-      url: photoUrls[Math.floor(random[i]/num_flips)],
-      id: "card" + Math.floor(random[i]/num_flips),
+      url: photoUrls[Math.floor(random[i]/numFlips)],
+      id: "card" + Math.floor(random[i]/numFlips),
       cardback: "Cardback.jpg"
     });
     i++;  
