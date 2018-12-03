@@ -1,11 +1,10 @@
-# IMPORTANT
-You have to run `npm install` before starting the server. 
+#Important Please Read
+So we don't accidentally start working on the same things causing pointless work and wasted time like we did with the win modal, 
+write down what you plan to do within the next day or few hours under the todo section, so we know who plans on doing what.
 
 # Todo
-Write html for individual cards, structure the game html/css, javascript up the game logic
+Tomorrow: Sidebar or customization (If no one claims either by the time I start working, I'll porbably start sidebar) - Josiah
 
-# Style
-For the sylesheets, it's much easier to use them with layouts/templates if we just have one style file
 
 # Ideas
 Post Your Ideas As You Get Them:
