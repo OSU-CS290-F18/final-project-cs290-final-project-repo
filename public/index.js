@@ -79,24 +79,25 @@ async function FlipCard(event){
             return;
         }
 
-    image = el.children[0].children[0];
-    //If face up, flip card face down
-    if(image.src === "http://localhost:3000/" + el.getAttribute('data_url')){
-        image.src = "Cardback.jpg";
+        image = el.children[0].children[0];
+        //If face up, flip card face down
+        if(image.src === "http://localhost:3000/" + el.getAttribute('data_url')){
+            image.src = "Cardback.jpg";
+        }
+        //If face down, flip card face up
+        else{
+            image.src = el.getAttribute('data_url');
+        }
+        el.classList.toggle("flipped");
+        cardCounter++;
+        flippedArray.push(el);
+        
+        if (cardCounter%numFlips === 0) {//if they have flipped the max number of cards in a sequence, check those cards
+            await sleep(700).then(() => {
+                checkPair();
+            });
+        }  
     }
-    //If face down, flip card face up
-    else{
-        image.src = el.getAttribute('data_url');
-    }
-    el.classList.toggle("flipped");
-    cardCounter++;
-    flippedArray.push(el);
-    
-    if (cardCounter%numFlips === 0) {//if they have flipped the max number of cards in a sequence, check those cards
-        await sleep(700).then(() => {
-            checkPair();
-        });
-    }  
     running = 0;
 }
 window.addEventListener('DOMContentLoaded', function () {
