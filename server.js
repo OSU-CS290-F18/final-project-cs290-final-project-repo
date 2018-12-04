@@ -5,7 +5,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 var mongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
-
+var gamestart = require('./gamestart');
 
 //Mongo variables
 var mongoUser = process.env.MUSER;
@@ -16,6 +16,7 @@ var mongoDBName = process.env.MDBNAME || mongoUser;
 var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
 var mongoDB;
 var images;
+var options;
 
 //GenerateRand creates an array of random numbers of size amount from 0 to max-1, with no repeated numbers. 
 //Useful for getting random photos from MongoDB and arranging the photos randomly
@@ -51,28 +52,30 @@ app.get('/', function(req, res){
   res.render('start');
 });
 
+
+//////////////////////////////
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
+  console.log("start");
+  res.render('game', gamestart(images, options, GenerateRand)); //Calls the gamestart function to begin game
+});
+////////////////////////////////
 
-  var numCards = images.length; //Right now all images are shown, maybe change to set number and selects from all images later? 
-  var numFlips = 2;
-  var ar = [];  
-  var i = 0;
-  var random = GenerateRand(numCards * numFlips, numCards*numFlips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+app.post('/reset', function(req, res){
+  if (req.body && req.body.flips && req.body.max) {
+    
+    var optionsCollection = mongoDB.collection('options');
 
-  while(parseInt(i) < numCards*numFlips){ //create an array with randomly arranged photos
-    ar.push({
-      url: images[Math.floor(random[i]/numFlips)].url,
-      id: "card" + Math.floor(random[i]/numFlips),
-      cardback: "Cardback.jpg"
-    });
-    i++;  
+    optionsCollection.updateOne({id: "flips"}, { $set: {flips: req.body.flips}});
+    optionsCollection.updateOne({id: "max"}, { $set: {max: req.body.max}});
+    
+    res.status(200).send('Options were added');
   }
-
-  res.render('game', {
-    cardInfo: ar
-  });
+  else{
+    res.status(400).send('missing required fields');
+   
+  }
 });
 
 app.post('/newCard', function(req, res){
@@ -133,7 +136,19 @@ mongoClient.connect(mongoURL, function(err, client){
             else{
               images = imageDocs;
             }
+          }); 
+          //////////////////////////
+  var optionsCollection = mongoDB.collection('options');
+  var optionsCursor = optionsCollection.find({});
+  optionsCursor.toArray(function(err, optionsDocs){
+            if(err){
+              throw err;
+            }
+            else{
+              options = optionsDocs;
+            }
           });
+          ///////////////////////////
   //start the server
   app.listen(port, function () {
     console.log("== Server is listening on port", port);

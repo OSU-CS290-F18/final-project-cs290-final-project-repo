@@ -4,7 +4,7 @@ body{
 }
 
 .cardContainer{
-    padding: 50px;
+    padding: 60px;
     display: block;
 }
 .card{
@@ -127,19 +127,41 @@ while a flipped one has an image a little ways 'inside' the card */
     height: 100%;
 }
 
+/*sidebar Options*/
+
 #sidebar-container{
     min-width: 175px;
-    max-width: 175px;
+    max-width: 190px;
     height: 100%;
     position: fixed;
     overflow-x: hidden;
     
-    margin: 10px 10px auto 10px;
-    padding-top: 20px;
+    margin: 10px 20px auto 10px;
+    padding: 10px;
     border-radius: 3px;
     background-color: rgba(239,239,239,.5);
   }
 
+  .options-container-boxes {
+    width: 100%;
+    margin: 20px auto;
+    align-items: right;
+    display: flex;
+    align-items: right;
+  }
+
+  .options-container {
+    font-size: 14px;
+    flex: 1 auto;
+    max-width: 50px;
+    margin-left: 10px;
+    padding: 3px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+  }
+
+
+  /*card container*/
   .cardContainer {
     margin-left: 160px;
     padding-right: 10px;
@@ -151,6 +173,8 @@ while a flipped one has an image a little ways 'inside' the card */
   .darkened {
       background-color: rgba(0,0,0,0.3);
   } 
+
+
 
 /*Congratulations Modal*/
 #congratulations-modal, #add-card-modal {
