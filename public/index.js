@@ -155,13 +155,6 @@ function reset(event) {
         }
     });
     req.send(body);
-    var deleteCards = document.querySelectorAll('.card')
-    for (var i =0; i < deleteCards.length; i++) {
-        deleteCards[i].remove();
-    }
-    req.open('GET', '/game');
-    req.send(body);
-    console.log("it closed");
 }
 
 
