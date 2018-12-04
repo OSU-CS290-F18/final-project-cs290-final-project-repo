@@ -51,6 +51,43 @@ app.get('/', function(req, res){
   res.render('start');
 });
 
+//Returns the images array as a string, use JSON.parse to transform into JSON
+app.get('/images', function(req,res){
+  res.statusCode = 200;
+  content = images;
+  res.set("Content-Type", "application/json");
+  res.send(content);
+})
+
+//Deletion handler
+app.delete('/deleteCard', function(req, res){
+  if(req.body && req.body.id){
+    var imageCollection = mongoDB.collection('images');
+
+    //Delete the image from mongo
+    imageCollection.deleteOne({
+      id: req.body.id
+    });
+
+    //Update the images array
+    var imageCursor = imageCollection.find({});
+    imageCursor.toArray(function(err, imageDocs){
+      if(err){
+        throw err;
+      }
+      else{
+        images = imageDocs;
+     }
+    });
+
+    res.status(200).send('Image deleted');
+  }
+  else{
+    res.status(400).send('missing required fields');
+  }
+});
+
+
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;

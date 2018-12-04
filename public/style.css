@@ -20,6 +20,8 @@ body{
 .card img{
     max-height: 175px;
     max-width: 100px;
+    height: 175px;
+    width: 100px;
 }
 
 /*the .flipped class adds padding to a card, so that an unflipped card is just the cardback image, 
@@ -63,13 +65,13 @@ while a flipped one has an image a little ways 'inside' the card */
 }
 
 /*hover selector for choosing face down cards*/
-.card:hover:not(.flipped){
+.card:hover:not(.flipped):not(static){
     height: 180px;
     width: 105px;
     margin: 7.5px;
 }
 
-.card:not(.flipped):hover img{
+.card:not(.flipped):not(static):hover img{
     max-height: 180px;
     max-width: 105px;
     height: 180px;
@@ -153,7 +155,7 @@ while a flipped one has an image a little ways 'inside' the card */
   } 
 
 /*Congratulations Modal*/
-#congratulations-modal, #add-card-modal {
+#congratulations-modal, #add-card-modal, #delete-card-modal{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -166,7 +168,7 @@ while a flipped one has an image a little ways 'inside' the card */
     display: none;
 }
 
-.congratulations-modal-content, .add-card-modal-content{
+.congratulations-modal-content, .add-card-modal-content, .delete-card-modal-content{
     width: auto;
     max-width: 600px;
     min-width: 350px;
@@ -178,12 +180,12 @@ while a flipped one has an image a little ways 'inside' the card */
     text-align: center;  
 }
 
-.congratulations-modal-header, .add-card-modal-header {
+.congratulations-modal-header, .add-card-modal-header, .delete-card-modal-header {
     position: relative;
     padding: 10px 20px;
 }
 
-#congratulations-modal-close, #add-card-modal-close{
+#congratulations-modal-close, #add-card-modal-close, #delete-card-modal-close{
     position: absolute;
     right: 10px;
     top: 5px;
@@ -194,11 +196,11 @@ while a flipped one has an image a little ways 'inside' the card */
     cursor: pointer;
 }
 
-.congratulations-modal-body, .add-card-modal-body {
+.congratulations-modal-body, .add-card-modal-body, .delete-card-modal-body {
     padding: auto 5px;
 }
 
-.congratulations-modal-body h1, .add-card-modal-body h1{
+.congratulations-modal-body h1, .add-card-modal-body h1, .delete-card-modal-body h1{
     font-size: 3.5em;
     font-family: arial;
     color: #333333;
@@ -210,6 +212,14 @@ while a flipped one has an image a little ways 'inside' the card */
     width: 50px;
     height: 50px;
     top: 0px;
+    right: 0px;
+    font-size: 40px;
+}
+#delete-card-button {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 50px;
     right: 0px;
     font-size: 40px;
 }

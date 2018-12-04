@@ -1,0 +1,31 @@
+<div id="delete-card-modal" class="hidden">
+    <div class="delete-card-modal-content">
+
+        <div class="delete-card-modal-header">
+         <button type="button" id="delete-card-modal-close" class="delete-card-modal-exit">&times;</button>
+        </div>
+
+        <div class="delete-card-modal-body">
+            <h1>Search for a Card</h1>
+            <div class="card-url-element">
+              <label for="url-text-input">Card Image URL</label>
+              <input type="text" id="delete-url-text-input"></input>
+            </div>
+
+            <div class="card-description-element">
+              <label for="card-description-input">Card Image Description</label>
+              <input type="text" id="delete-description-input">
+            </div>
+        </div>
+
+         <button type="button" id="delete-card-modal-search" class="delete-card-modal-button">Search</button>
+         <div class= "not-found hidden" id = 'not-found'>We couldn't find that card</div>
+         <div class= "card-preview hidden" id = "card-preview-container">
+             {{>card url="placehold" cardback= "placehold" id = "placehold"}}
+         </div>
+         <button type = "button" id ="delete-card-modal-accept" class = "delete-card-modal-button hidden">Delete this card?</button>
+         <div class = "card-deleted hidden" id ="card-deleted">Card successfully deleted</div>
+
+          
+    </div>
+</div>
