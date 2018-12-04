@@ -5,7 +5,8 @@ write down what you plan to do within the next day or few hours under the todo s
 # Todo
 Tuesday 12/3:  Alright so the sidebar branch isn't quite ready but I need to sleep.  I don't think what I did is the best way to it either: For resetting, I propose (and implemented) that we just reload the page and save the user's settings in Mongodb.  I haven't merged Sidebar because the sidebar buttons have issues but I will on Tuesday.  If you want to go into the sidebar branch, update your mongodb with db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}]) - Josiah
 
-Monday, 12/3: Work on server communication with MongoDB -Cole
+Tuesday, 12/4: I think that just svaing the sidebar stuff should work fine, I'm planning to create a way
+to delete a(non-default) image from the database, and then do some work on the css. 
 
 # Mongo Setup
 The server expects the mongo database to have an `images` collection, which can be setup by running 
