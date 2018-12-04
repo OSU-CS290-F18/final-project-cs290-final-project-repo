@@ -100,6 +100,37 @@ async function FlipCard(event){
     }
     running = 0;
 }
+
+function PostCard(event){
+    var cardURL = document.getElementById('url-text-input');
+    var cardDesc = document.getElementById('card-description-input');
+
+    //Make sure fields are filled
+    if(!cardURL.value || !cardDesc.value){
+        alert("New cards must have an image and description");
+        return;
+    }
+    //Create the request to post a card
+    var req = new XMLHttpRequest();
+    req.open('POST', '/newCard');
+    var body = JSON.stringify({
+        url: cardURL.value,
+        description: cardDesc.value
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+    //Listen for response from the server
+    req.addEventListener('load', function(event){
+        if(event.target.status != '200'){
+            alert("There was an issue adding the post");
+        }
+    });
+    req.send(body);
+    //Close the modal
+    document.getElementById('add-card-modal').classList.toggle('hidden');
+}
+
+
 window.addEventListener('DOMContentLoaded', function () {
     var posts = document.getElementById("cardContainer");
     if(posts){
@@ -110,5 +141,22 @@ window.addEventListener('DOMContentLoaded', function () {
     closeCongratsModal.addEventListener('click', function(event) {
         congrats.classList.toggle('hidden');
     });
+
+    var addCard = document.getElementById('add-card-modal');
+    var cardButton = document.getElementById('add-card-button');
+    var closeCardModal = document.getElementById('add-card-modal-close');
+    var acceptCardModal = document.getElementById('add-card-modal-accept');
+    if(cardButton){
+        cardButton.addEventListener('click',function(event){
+            addCard.classList.toggle('hidden');
+        })
+    }
+    if(addCard){
+        closeCardModal.addEventListener('click', function(event){
+            addCard.classList.toggle('hidden');
+        })
+        acceptCardModal.addEventListener('click', PostCard);
+    }
+
 
 });

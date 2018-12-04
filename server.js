@@ -4,6 +4,7 @@ var exphb = require('express-handlebars');
 var app = express();
 var port = process.env.PORT || 3000;
 var mongoClient = require('mongodb').MongoClient;
+var bodyParser = require('body-parser');
 
 
 //Mongo variables
@@ -42,6 +43,7 @@ app.set('view engine', 'handlebars');
 
 //Serving up those static files
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 //Default handler
 app.get('/', function(req, res){
@@ -53,13 +55,11 @@ app.get('/', function(req, res){
 app.get('/game', function(req, res) {
   res.statusCode = 200;
 
-  /*Card Generation Section*/
-  var numCards = 4;
+  var numCards = images.length; //Right now all images are shown, maybe change to set number and selects from all images later? 
   var numFlips = 2;
   var ar = [];  
   var i = 0;
-  //var photoUrls = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"];
-  var random = GenerateRand(numCards * numFlips, numCards * numFlips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+  var random = GenerateRand(numCards * numFlips, numCards*numFlips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
 
   while(parseInt(i) < numCards*numFlips){ //create an array with randomly arranged photos
     ar.push({
@@ -75,20 +75,54 @@ app.get('/game', function(req, res) {
   });
 });
 
+app.post('/newCard', function(req, res){
+  //make sure there are values for the things we want: url and description
+  if(req.body && req.body.url && req.body.description){
+    var imageCollection = mongoDB.collection('images');
+
+    //Send the new image to mongo
+    imageCollection.insertOne({
+      url: req.body.url,
+      description: req.body.description,
+      default: 'false',
+      id: 'photo'+ (images.length + 1)
+    });
+
+    //Update the images array
+    var imageCursor = imageCollection.find({});
+    imageCursor.toArray(function(err, imageDocs){
+      if(err){
+        throw err;
+      }
+      else{
+        images = imageDocs;
+     }
+    });
+
+    res.status(200).send('Image added to database');
+  }
+  else{
+    res.status(400).send('missing required fields');
+  }
+});
+
 //404 handler
 app.get('*', function (req, res) {
   res.statusCode = 404;
   res.render('404');
 });
 
+//Make sure the mongo user and password are defined
 if(!mongoUser || !mongoPassword){
   throw "MUSER and MPASSWORD environment variables must be defined";
 }
 
+//Make sure we connect to mongo before running the server
 mongoClient.connect(mongoURL, function(err, client){
   if(err){
     throw err;
   }
+  //Get the images from mongo
   mongoDB = client.db(mongoDBName);
   var imageCollection = mongoDB.collection('images');
   var imageCursor = imageCollection.find({});
@@ -100,6 +134,7 @@ mongoClient.connect(mongoURL, function(err, client){
               images = imageDocs;
             }
           });
+  //start the server
   app.listen(port, function () {
     console.log("== Server is listening on port", port);
   });

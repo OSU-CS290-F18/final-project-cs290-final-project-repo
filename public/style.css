@@ -153,7 +153,7 @@ while a flipped one has an image a little ways 'inside' the card */
   } 
 
 /*Congratulations Modal*/
-#congratulations-modal {
+#congratulations-modal, #add-card-modal {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -166,7 +166,7 @@ while a flipped one has an image a little ways 'inside' the card */
     display: none;
 }
 
-.congratulations-modal-content {
+.congratulations-modal-content, .add-card-modal-content{
     width: auto;
     max-width: 600px;
     min-width: 350px;
@@ -178,12 +178,12 @@ while a flipped one has an image a little ways 'inside' the card */
     text-align: center;  
 }
 
-.congratulations-modal-header {
+.congratulations-modal-header, .add-card-modal-header {
     position: relative;
     padding: 10px 20px;
 }
 
-#congratulations-modal-close {
+#congratulations-modal-close, #add-card-modal-close{
     position: absolute;
     right: 10px;
     top: 5px;
@@ -194,14 +194,22 @@ while a flipped one has an image a little ways 'inside' the card */
     cursor: pointer;
 }
 
-.congratulations-modal-body {
+.congratulations-modal-body, .add-card-modal-body {
     padding: auto 5px;
 }
 
-.congratulations-modal-body h1{
+.congratulations-modal-body h1, .add-card-modal-body h1{
     font-size: 3.5em;
     font-family: arial;
     color: #333333;
     text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
   }
 
+#add-card-button {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0px;
+    right: 0px;
+    font-size: 40px;
+}
