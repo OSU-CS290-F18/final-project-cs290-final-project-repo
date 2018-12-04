@@ -143,6 +143,7 @@ function SearchCard(event){
             var deleteButton = document.getElementById('delete-card-modal-accept');
             var preview = document.getElementById('card-preview-container');
             var deleted = document.getElementById('card-deleted');
+            var message = document.getElementById('not-found');
             var url = document.getElementById('delete-url-text-input').value;
             var desc = document.getElementById('delete-description-input').value;
             var card;
@@ -161,8 +162,7 @@ function SearchCard(event){
             }
             if(!card){
                 //Toggle elements if they need toggling
-                var message = document.getElementById('not-found') //display not found message
-                if(message.classList.contains('hidden')){
+                if(message.classList.contains('hidden')){ //display not found message
                     message.classList.toggle('hidden');
                 }
                 if(!preview.classList.contains('hidden')){
@@ -192,6 +192,9 @@ function SearchCard(event){
                 }
                 if(!deleted.classList.contains('hidden')){
                     deleted.classList.toggle('hidden'); //Hide the successfully deleted message
+                }
+                if(!message.classList.contains('hidden')){ //hide not found message
+                    message.classList.toggle('hidden');
                 }
             }
 

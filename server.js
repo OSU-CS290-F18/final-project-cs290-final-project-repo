@@ -73,6 +73,7 @@ app.delete('/deleteCard', function(req, res){
     var imageCursor = imageCollection.find({});
     imageCursor.toArray(function(err, imageDocs){
       if(err){
+        res.status(500).send('There was an error deleting the image');
         throw err;
       }
       else{
