@@ -57,6 +57,16 @@ async function checkPair() {
     }
 }
 
+//Notify creates a pop-up in the lower right corner with that displays the text for 2 seconds
+function Notify(text){
+    var notification = document.getElementById('success-container');
+    notification.children[0].innerHTML = text;
+    notification.classList.toggle('hidden');
+    sleep(2000).then(() => {
+        notification.classList.toggle('hidden');
+    });
+}
+
 async function FlipCard(event){
     if(parseInt(running) === 0){ 
         running = 1;
@@ -127,6 +137,106 @@ function PostCard(event){
     req.send(body);
     //Close the modal
     document.getElementById('add-card-modal').classList.toggle('hidden');
+    cardURL.value = '';
+    cardDesc.value = '';
+    Notify('Card Successfully Created');
+}
+
+function SearchCard(event){
+    req = new XMLHttpRequest();
+    req.open('GET', '/images');
+    req.addEventListener('load', function(event){
+        if(event.target.status !== 200){
+            alert("There was an issue getting the images: " + event.target.response);
+        }
+        else{
+            var images = event.target.response;
+            var parse = JSON.parse(images);
+            var deleteButton = document.getElementById('delete-card-modal-accept');
+            var preview = document.getElementById('card-preview-container');
+            var deleted = document.getElementById('card-deleted');
+            var message = document.getElementById('not-found');
+            var url = document.getElementById('delete-url-text-input').value;
+            var desc = document.getElementById('delete-description-input').value;
+            var card;
+            for(var i = 0; i < parse.length; i++){ //Search the images for the specified fields
+                if(parse[i].default === 'true'){
+                    continue;  //ignore default images
+                }
+                if(parse[i].url === url){
+                    card = parse[i];
+                    break;
+                }
+                if(parse[i].description === desc){
+                    card = parse[i];
+                    break;
+                }
+            }
+            if(!card){
+                //Toggle elements if they need toggling
+                if(message.classList.contains('hidden')){ //display not found message
+                    message.classList.toggle('hidden');
+                }
+                if(!preview.classList.contains('hidden')){
+                    preview.classList.toggle('hidden'); //hide the preview if it is not hidden
+                }
+                if(!deleteButton.classList.contains('hidden')){
+                    deleteButton.classList.toggle('hidden'); //hide the delete button if it is not hidden
+                }
+                if(!deleted.classList.contains('hidden')){
+                    deleted.classList.toggle('hidden');  //Hide the successfully deleted message
+                }
+            }
+            else{
+                //Display a preview of the found card
+                var displayCard = preview.children[0];
+                if(!displayCard.classList.contains('static')){
+                    displayCard.classList.add('static');
+                }
+                if(!displayCard.classList.contains('flipped')){
+                    displayCard.classList.add('flipped');
+                }
+                displayCard.setAttribute('data_url', card.url);
+                displayCard.setAttribute('data_post_id', card.id);
+                displayCard.children[0].children[0].src = card.url;
+                if(preview.classList.contains('hidden')){
+                    preview.classList.toggle('hidden');
+                }
+                if(deleteButton.classList.contains('hidden')){
+                    deleteButton.classList.toggle('hidden'); //show the delete button
+                }
+               /* if(!deleted.classList.contains('hidden')){
+                    deleted.classList.toggle('hidden'); //Hide the successfully deleted message
+                }*/
+                if(!message.classList.contains('hidden')){ //hide not found message
+                    message.classList.toggle('hidden');
+                }
+            }
+
+        }
+    })
+    req.send();
+}
+
+function DeleteCard(event){
+    var card = document.getElementById('card-preview-container').children[0];
+    var req = new XMLHttpRequest();
+    req.open('DELETE', '/deleteCard');
+    var body = JSON.stringify({
+        id: card.getAttribute('data_post_id')
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+    //Listen for response from the server
+    req.addEventListener('load', function(event){
+        if(event.target.status != '200'){
+            alert("There was an issue deleting the card");
+        }
+        else{
+            Notify('Card Successfully Deleted');
+        }
+    });
+    req.send(body);
 }
 
 function reset(event) {
@@ -192,16 +302,34 @@ window.addEventListener('DOMContentLoaded', function () {
 
     var addCard = document.getElementById('add-card-modal');
     var cardButton = document.getElementById('add-card-button');
+    var deleteCard = document.getElementById('delete-card-modal');
+    var deleteButton = document.getElementById('delete-card-button');
+    var deleteCardAccept = document.getElementById('delete-card-modal-accept');
     var closeCardModal = document.getElementById('add-card-modal-close');
+    var closeDeleteModal = document.getElementById('delete-card-modal-close');
     var acceptCardModal = document.getElementById('add-card-modal-accept');
+    var searchCards = document.getElementById('delete-card-modal-search');
+
     if(cardButton){
         cardButton.addEventListener('click',function(event){
             addCard.classList.toggle('hidden');
         })
     }
+    if(deleteButton){
+        deleteButton.addEventListener('click', function(event){
+            deleteCard.classList.toggle('hidden');
+        });
+        searchCards.addEventListener('click', SearchCard);
+        deleteCardAccept.addEventListener('click', DeleteCard);
+        closeDeleteModal.addEventListener('click', function(event){
+            deleteCard.classList.toggle('hidden');
+        })
+    }
     if(addCard){
         closeCardModal.addEventListener('click', function(event){
             addCard.classList.toggle('hidden');
+            document.getElementById('url-text-input').value = ''; //Empty the text boxes for the add-card-modal
+            document.getElementById('card-description-input').value = '';
         })
         acceptCardModal.addEventListener('click', PostCard);
     }

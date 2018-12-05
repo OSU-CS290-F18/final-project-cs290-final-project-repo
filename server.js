@@ -36,8 +36,6 @@ function GenerateRand(amount, max){
   return array;
 }
 
-
-
 //Sever Setup
 app.engine('handlebars', exphb({defaultLayout: 'default'}));
 app.set('view engine', 'handlebars');
@@ -52,8 +50,48 @@ app.get('/', function(req, res){
   res.render('start');
 });
 
+<<<<<<< HEAD
 
 //////////////////////////////
+=======
+//Returns the images array as a string, use JSON.parse to transform into JSON
+app.get('/images', function(req,res){
+  res.statusCode = 200;
+  content = images;
+  res.set("Content-Type", "application/json");
+  res.send(content);
+})
+
+//Deletion handler
+app.delete('/deleteCard', async function(req, res){
+  if(req.body && req.body.id){
+    var imageCollection = mongoDB.collection('images');
+
+    //Delete the image from mongo
+    await imageCollection.deleteOne({
+      id: req.body.id
+    });
+
+    //Update the images array
+    var imageCursor = imageCollection.find({});
+    imageCursor.toArray(function(err, imageDocs){
+      if(err){
+        res.status(500).send('There was an error deleting the image');
+        throw err;
+      }
+      else{
+        images = imageDocs;
+        res.status(200).send('Image deleted');
+     }
+    });
+  }
+  else{
+    res.status(400).send('missing required fields');
+  }
+});
+
+
+>>>>>>> master
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
@@ -128,13 +166,13 @@ app.post('/reset', function(req, res){
   }
 });
 
-app.post('/newCard', function(req, res){
+app.post('/newCard', async function(req, res){
   //make sure there are values for the things we want: url and description
   if(req.body && req.body.url && req.body.description){
     var imageCollection = mongoDB.collection('images');
 
     //Send the new image to mongo
-    imageCollection.insertOne({
+    await imageCollection.insertOne({
       url: req.body.url,
       description: req.body.description,
       default: 'false',
