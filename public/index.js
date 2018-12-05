@@ -132,10 +132,11 @@ function PostCard(event){
 function reset(event) {
     var flipInput = document.getElementById('options-flips');
     var maxCardInput = document.getElementById('options-max-cards');
-    if (!parseInt(flipInput.value)) {
+    if (!flipInput.value) {
         flipInput.value = numFlips;
+
     }
-    if (!parseInt(maxCardInput.value)) {
+    if (!maxCardInput.value) {
         maxCardInput.value = parseInt(numCards);
     } 
     console.log(maxCardInput.value);
@@ -154,9 +155,28 @@ function reset(event) {
             alert("There was an issue resetting");
         }
     });
+    /*callGame();*/
     req.send(body);
+    
 }
 
+function callGame() {
+    console.log("asdf");
+    var req = new XMLHttpRequest();
+    req.open('GET', '/game', true);
+
+    req.onload = function () {
+        console.log("loaded");
+    }
+    req.setRequestHeader('Content-Type', 'application/json');
+    //Listen for response from the server
+    req.addEventListener('load', function(event){
+        if(event.target.status != '200'){
+            alert("There was an issue resetting");
+        }
+    });
+    req.send(null);
+}
 
 window.addEventListener('DOMContentLoaded', function () {
 
@@ -189,7 +209,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var resetButton = document.getElementById('sidebar-reset');
 
     if(resetButton) {
-        resetButton.addEventListener('click', reset)
+        resetButton.addEventListener('click', reset);
     }
 
 });

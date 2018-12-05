@@ -57,8 +57,48 @@ app.get('/', function(req, res){
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
-  console.log("start");
-  res.render('game', gamestart(images, options, GenerateRand)); //Calls the gamestart function to begin game
+    var numCards = images.length; 
+    var numFlips = options[0].flips; ////////////////////
+    var maxNumCards = options[1].max; //Determines the max number of card pairings that are set up
+    console.log(maxNumCards);
+    console.log(numFlips);
+    console.log("break");
+    var ar = [];  
+    var i = 0;
+    var random = GenerateRand(numCards * numFlips, numCards*numFlips);
+    var randRemove;
+
+    if (maxNumCards >= numCards) {
+      randRemove = [];
+    }   
+    else {
+      randRemove = GenerateRand(numCards - maxNumCards, numCards);
+    }
+
+ //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+
+    for (var j = 0; j < randRemove.length; j++) { //Filters out the numbers that were randomly selected in randRemove
+      random = random.filter(function(value, index, arr) {
+        return Math.floor(value/numFlips) != randRemove[j];
+      });
+    }
+
+
+    while(parseInt(i) < random.length){ //create an array with randomly arranged photos
+      ar.push({
+        url: images[Math.floor(random[i]/numFlips)].url,
+        id: "card" + Math.floor(random[i]/numFlips),
+        cardback: "Cardback.jpg"
+    });
+      i++;  
+    }
+
+    res.render('game', {
+    cardInfo: ar,
+    flips: numFlips,
+    maxCards: maxNumCards
+    });
+  
 });
 ////////////////////////////////
 
@@ -70,6 +110,16 @@ app.post('/reset', function(req, res){
     optionsCollection.updateOne({id: "flips"}, { $set: {flips: req.body.flips}});
     optionsCollection.updateOne({id: "max"}, { $set: {max: req.body.max}});
     
+    var optionsCursor = optionsCollection.find({});
+      optionsCursor.toArray(function(err, optionsDocs){
+      if(err){
+        throw err;
+      }
+      else{
+        options = optionsDocs;
+     }
+    });
+
     res.status(200).send('Options were added');
   }
   else{
