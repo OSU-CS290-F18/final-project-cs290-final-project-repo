@@ -35,8 +35,6 @@ function GenerateRand(amount, max){
   return array;
 }
 
-
-
 //Sever Setup
 app.engine('handlebars', exphb({defaultLayout: 'default'}));
 app.set('view engine', 'handlebars');
@@ -60,12 +58,12 @@ app.get('/images', function(req,res){
 })
 
 //Deletion handler
-app.delete('/deleteCard', function(req, res){
+app.delete('/deleteCard', async function(req, res){
   if(req.body && req.body.id){
     var imageCollection = mongoDB.collection('images');
 
     //Delete the image from mongo
-    imageCollection.deleteOne({
+    await imageCollection.deleteOne({
       id: req.body.id
     });
 
@@ -78,10 +76,9 @@ app.delete('/deleteCard', function(req, res){
       }
       else{
         images = imageDocs;
+        res.status(200).send('Image deleted');
      }
     });
-
-    res.status(200).send('Image deleted');
   }
   else{
     res.status(400).send('missing required fields');
@@ -113,13 +110,13 @@ app.get('/game', function(req, res) {
   });
 });
 
-app.post('/newCard', function(req, res){
+app.post('/newCard', async function(req, res){
   //make sure there are values for the things we want: url and description
   if(req.body && req.body.url && req.body.description){
     var imageCollection = mongoDB.collection('images');
 
     //Send the new image to mongo
-    imageCollection.insertOne({
+    await imageCollection.insertOne({
       url: req.body.url,
       description: req.body.description,
       default: 'false',

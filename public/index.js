@@ -58,6 +58,16 @@ async function checkPair() {
     }
 }
 
+//Notify creates a pop-up in the lower right corner with that displays the text for 2 seconds
+function Notify(text){
+    var notification = document.getElementById('success-container');
+    notification.children[0].innerHTML = text;
+    notification.classList.toggle('hidden');
+    sleep(2000).then(() => {
+        notification.classList.toggle('hidden');
+    });
+}
+
 async function FlipCard(event){
     if(parseInt(running) === 0){ 
         running = 1;
@@ -128,6 +138,9 @@ function PostCard(event){
     req.send(body);
     //Close the modal
     document.getElementById('add-card-modal').classList.toggle('hidden');
+    cardURL.value = '';
+    cardDesc.value = '';
+    Notify('Card Successfully Created');
 }
 
 function SearchCard(event){
@@ -181,6 +194,9 @@ function SearchCard(event){
                 if(!displayCard.classList.contains('static')){
                     displayCard.classList.add('static');
                 }
+                if(!displayCard.classList.contains('flipped')){
+                    displayCard.classList.add('flipped');
+                }
                 displayCard.setAttribute('data_url', card.url);
                 displayCard.setAttribute('data_post_id', card.id);
                 displayCard.children[0].children[0].src = card.url;
@@ -190,9 +206,9 @@ function SearchCard(event){
                 if(deleteButton.classList.contains('hidden')){
                     deleteButton.classList.toggle('hidden'); //show the delete button
                 }
-                if(!deleted.classList.contains('hidden')){
+               /* if(!deleted.classList.contains('hidden')){
                     deleted.classList.toggle('hidden'); //Hide the successfully deleted message
-                }
+                }*/
                 if(!message.classList.contains('hidden')){ //hide not found message
                     message.classList.toggle('hidden');
                 }
@@ -218,10 +234,7 @@ function DeleteCard(event){
             alert("There was an issue deleting the card");
         }
         else{
-            var message = document.getElementById('card-deleted');
-            if(message.classList.contains('hidden')){
-                message.classList.toggle('hidden');
-            }
+            Notify('Card Successfully Deleted');
         }
     });
     req.send(body);
@@ -267,6 +280,8 @@ window.addEventListener('DOMContentLoaded', function () {
     if(addCard){
         closeCardModal.addEventListener('click', function(event){
             addCard.classList.toggle('hidden');
+            document.getElementById('url-text-input').value = ''; //Empty the text boxes for the add-card-modal
+            document.getElementById('card-description-input').value = '';
         })
         acceptCardModal.addEventListener('click', PostCard);
     }

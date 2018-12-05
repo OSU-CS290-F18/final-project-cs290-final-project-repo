@@ -1,3 +1,8 @@
+# Important
+If anyone notices an inconsistency between the added/deleted cards(the stored images not being what is in mongo), note it here:
+
+I think I've fixed the issue but it happens kinda rarely.
+
 # Important Please Read
 So we don't accidentally start working on the same things causing pointless work and wasted time like we did with the win modal, 
 write down what you plan to do within the next day or few hours under the todo section, so we know who plans on doing what.
