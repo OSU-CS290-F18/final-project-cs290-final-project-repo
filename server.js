@@ -6,7 +6,6 @@ var port = process.env.PORT || 3000;
 var mongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 
-
 //Mongo variables
 var mongoUser = process.env.MUSER;
 var mongoPassword = process.env.MPASSWORD;
@@ -16,6 +15,7 @@ var mongoDBName = process.env.MDBNAME || mongoUser;
 var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
 var mongoDB;
 var images;
+var options;
 
 //GenerateRand creates an array of random numbers of size amount from 0 to max-1, with no repeated numbers. 
 //Useful for getting random photos from MongoDB and arranging the photos randomly
@@ -49,6 +49,8 @@ app.get('/', function(req, res){
   res.render('start');
 });
 
+
+//////////////////////////////
 //Returns the images array as a string, use JSON.parse to transform into JSON
 app.get('/images', function(req,res){
   res.statusCode = 200;
@@ -89,25 +91,74 @@ app.delete('/deleteCard', async function(req, res){
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
+    var numCards = images.length; 
+    var numFlips = options[0].flips; ////////////////////
+    var maxNumCards = options[1].max; //Determines the max number of card pairings that are set up
+    var ar = [];  
+    var i = 0;
+    var random = GenerateRand(numCards * numFlips, numCards*numFlips);
+    var randRemove;
 
-  var numCards = images.length; //Right now all images are shown, maybe change to set number and selects from all images later? 
-  var numFlips = 2;
-  var ar = [];  
-  var i = 0;
-  var random = GenerateRand(numCards * numFlips, numCards*numFlips); //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+    if (maxNumCards >= numCards) {
+      randRemove = [];
+    }   
+    //Randomly selects the cards to remove from random array
+    else {
+      randRemove = GenerateRand(numCards - maxNumCards, numCards);
+    }
 
-  while(parseInt(i) < numCards*numFlips){ //create an array with randomly arranged photos
-    ar.push({
-      url: images[Math.floor(random[i]/numFlips)].url,
-      id: "card" + Math.floor(random[i]/numFlips),
-      cardback: "Cardback.jpg"
+ //takes in 8 cards and returns 8 rand numbers.  Use integer division by the number of matches
+
+    for (var j = 0; j < randRemove.length; j++) { //Filters out the numbers that were randomly selected in randRemove
+      random = random.filter(function(value, index, arr) {
+        return Math.floor(value/numFlips) != randRemove[j];
+      });
+    }
+
+
+    while(parseInt(i) < random.length){ //create an array with randomly arranged photos
+      ar.push({
+        url: images[Math.floor(random[i]/numFlips)].url,
+        id: "card" + Math.floor(random[i]/numFlips),
+        cardback: "Cardback.jpg"
     });
-    i++;  
-  }
+      i++;  
+    }
 
-  res.render('game', {
-    cardInfo: ar
-  });
+    res.render('game', {
+    cardInfo: ar,
+    flips: numFlips,
+    maxCards: maxNumCards
+    });
+  
+});
+////////////////////////////////
+
+
+
+app.post('/save', function(req, res){
+  if (req.body && req.body.flips && req.body.max) {
+    var optionsCollection = mongoDB.collection('options');
+
+    optionsCollection.updateOne({id: "flips"}, { $set: {flips: req.body.flips}});
+    optionsCollection.updateOne({id: "max"}, { $set: {max: req.body.max}});
+    
+    var optionsCursor = optionsCollection.find({});
+      optionsCursor.toArray(function(err, optionsDocs){
+      if(err){
+        throw err;
+      }
+      else{
+        options = optionsDocs;
+     }
+    });
+
+    res.status(200).send('Options were added');
+  }
+  else{
+    res.status(400).send('missing required fields');
+   
+  }
 });
 
 app.post('/newCard', async function(req, res){
@@ -168,7 +219,19 @@ mongoClient.connect(mongoURL, function(err, client){
             else{
               images = imageDocs;
             }
+          }); 
+          //////////////////////////
+  var optionsCollection = mongoDB.collection('options');
+  var optionsCursor = optionsCollection.find({});
+  optionsCursor.toArray(function(err, optionsDocs){
+            if(err){
+              throw err;
+            }
+            else{
+              options = optionsDocs;
+            }
           });
+          ///////////////////////////
   //start the server
   app.listen(port, function () {
     console.log("== Server is listening on port", port);

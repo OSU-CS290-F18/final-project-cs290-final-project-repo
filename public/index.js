@@ -1,6 +1,5 @@
-
-var numFlips = 2;
-var numCards = 4;
+var numFlips = parseInt(document.getElementById('options-flips').placeholder);
+var numCards = Math.floor(document.querySelectorAll('.cardPhoto').length/numFlips);
 var matchCounter = 0; //How many card pairs have been matched
 var flippedArray = []; //the cards during each reset period that were flipped so far
 var cardCounter  = 0;  //counts the number of cards turned before a reset
@@ -239,9 +238,38 @@ function DeleteCard(event){
     });
     req.send(body);
 }
+/*Sends options back to mongo*/
+function saveOptions(event) {
+    var flipInput = document.getElementById('options-flips');
+    var maxCardInput = document.getElementById('options-max-cards');
+    if (!flipInput.value) {
+        flipInput.value = numFlips;
 
+    }
+    if (!maxCardInput.value) {
+        maxCardInput.value = parseInt(numCards);
+    } 
+    
+    var req = new XMLHttpRequest();
+    req.open('POST', '/save');
+    var body = JSON.stringify({
+        flips: flipInput.value,
+        max: maxCardInput.value
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+    //Listen for response from the server
+    req.addEventListener('load',  function(event){
+        if(event.target.status != '200'){
+            alert("There was an issue resetting");
+        }
+    });
+    
+    req.send(body);
+}
 
 window.addEventListener('DOMContentLoaded', function () {
+
     var posts = document.getElementById("cardContainer");
     if(posts){
         posts.addEventListener('click', FlipCard);
@@ -286,5 +314,24 @@ window.addEventListener('DOMContentLoaded', function () {
         acceptCardModal.addEventListener('click', PostCard);
     }
 
+    var saveButton = document.getElementById('sidebar-save');
+    var resetButton = document.getElementById('sidebar-reset');
+    var playAgainButton = document.getElementById('reset');
+
+    if(saveButton) {
+        saveButton.addEventListener('click', saveOptions);
+    }
+
+    if(resetButton) {
+        resetButton.addEventListener('click', function(event) {
+            window.location.reload(true);
+        });
+    }
+
+    if(playAgainButton) {
+        playAgainButton.addEventListener('click', function(event) {
+            window.location.reload(true);
+        });
+    }
 
 });
