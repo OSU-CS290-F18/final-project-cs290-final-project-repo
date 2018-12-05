@@ -8,7 +8,8 @@ So we don't accidentally start working on the same things causing pointless work
 write down what you plan to do within the next day or few hours under the todo section, so we know who plans on doing what.
 
 # Todo
-Wedensday 12/5:  Let me know if you think of anymore sidebar options (or just implement them I guess).  Today I'll work on finishing up the things I can think of that we might need:  Number of attempts counter in the win modal, consistent css styling, maybe customization, and maybe allowing user the choice of which cards to use from their array.  The sidebar branch is now in master so you have to update your mongodb with db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}]) - Josiah (I'm free all day after 11am so I'll probably just be doing this all day and finals)
+Wedensday 12/5:  Let me know if you think of anymore sidebar options (or just implement them I guess).  Today I'll work on finishing up the things I can think of that we might need:  Number of attempts counter in the win modal, consistent css styling, maybe customization, and maybe allowing user the choice of which cards to use from their array.  The last one I would probably do last so if you have a good idea on how to do any of the above be my guest.
+  The sidebar branch is now in master so you have to update your mongodb with db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}]) - Josiah (I'm free all day after 11am so I'll probably just be doing this all day and finals)
 
 Tuesday, 12/4: I think that just svaing the sidebar stuff should work fine, I'm planning to create a way
 to delete a(non-default) image from the database, and then do some work on the css. 
