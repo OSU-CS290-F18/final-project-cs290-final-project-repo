@@ -1,5 +1,5 @@
 var numFlips = parseInt(document.getElementById('options-flips').placeholder);
-var numCards = Math.floor(document.querySelectorAll('.cardPhoto').length/2);
+var numCards = Math.floor(document.querySelectorAll('.cardPhoto').length/numFlips);
 var matchCounter = 0; //How many card pairs have been matched
 var flippedArray = []; //the cards during each reset period that were flipped so far
 var cardCounter  = 0;  //counts the number of cards turned before a reset
@@ -238,8 +238,8 @@ function DeleteCard(event){
     });
     req.send(body);
 }
-
-function reset(event) {
+/*Sends options back to mongo*/
+function saveOptions(event) {
     var flipInput = document.getElementById('options-flips');
     var maxCardInput = document.getElementById('options-max-cards');
     if (!flipInput.value) {
@@ -249,10 +249,9 @@ function reset(event) {
     if (!maxCardInput.value) {
         maxCardInput.value = parseInt(numCards);
     } 
-    console.log(maxCardInput.value);
-    console.log(flipInput.value);
+    
     var req = new XMLHttpRequest();
-    req.open('POST', '/reset');
+    req.open('POST', '/save');
     var body = JSON.stringify({
         flips: flipInput.value,
         max: maxCardInput.value
@@ -260,32 +259,13 @@ function reset(event) {
 
     req.setRequestHeader('Content-Type', 'application/json');
     //Listen for response from the server
-    req.addEventListener('load', function(event){
+    req.addEventListener('load',  function(event){
         if(event.target.status != '200'){
             alert("There was an issue resetting");
         }
     });
-    /*callGame();*/
-    req.send(body);
     
-}
-
-function callGame() {
-    console.log("asdf");
-    var req = new XMLHttpRequest();
-    req.open('GET', '/game', true);
-
-    req.onload = function () {
-        console.log("loaded");
-    }
-    req.setRequestHeader('Content-Type', 'application/json');
-    //Listen for response from the server
-    req.addEventListener('load', function(event){
-        if(event.target.status != '200'){
-            alert("There was an issue resetting");
-        }
-    });
-    req.send(null);
+    req.send(body);
 }
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -334,10 +314,24 @@ window.addEventListener('DOMContentLoaded', function () {
         acceptCardModal.addEventListener('click', PostCard);
     }
 
+    var saveButton = document.getElementById('sidebar-save');
     var resetButton = document.getElementById('sidebar-reset');
+    var playAgainButton = document.getElementById('reset');
+
+    if(saveButton) {
+        saveButton.addEventListener('click', saveOptions);
+    }
 
     if(resetButton) {
-        resetButton.addEventListener('click', reset);
+        resetButton.addEventListener('click', function(event) {
+            window.location.reload(true);
+        });
+    }
+
+    if(playAgainButton) {
+        playAgainButton.addEventListener('click', function(event) {
+            window.location.reload(true);
+        });
     }
 
 });

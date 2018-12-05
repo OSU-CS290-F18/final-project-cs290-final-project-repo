@@ -50,10 +50,8 @@ app.get('/', function(req, res){
   res.render('start');
 });
 
-<<<<<<< HEAD
 
 //////////////////////////////
-=======
 //Returns the images array as a string, use JSON.parse to transform into JSON
 app.get('/images', function(req,res){
   res.statusCode = 200;
@@ -91,16 +89,12 @@ app.delete('/deleteCard', async function(req, res){
 });
 
 
->>>>>>> master
 //Game handler
 app.get('/game', function(req, res) {
   res.statusCode = 200;
     var numCards = images.length; 
     var numFlips = options[0].flips; ////////////////////
     var maxNumCards = options[1].max; //Determines the max number of card pairings that are set up
-    console.log(maxNumCards);
-    console.log(numFlips);
-    console.log("break");
     var ar = [];  
     var i = 0;
     var random = GenerateRand(numCards * numFlips, numCards*numFlips);
@@ -109,6 +103,7 @@ app.get('/game', function(req, res) {
     if (maxNumCards >= numCards) {
       randRemove = [];
     }   
+    //Randomly selects the cards to remove from random array
     else {
       randRemove = GenerateRand(numCards - maxNumCards, numCards);
     }
@@ -140,9 +135,10 @@ app.get('/game', function(req, res) {
 });
 ////////////////////////////////
 
-app.post('/reset', function(req, res){
+
+
+app.post('/save', function(req, res){
   if (req.body && req.body.flips && req.body.max) {
-    
     var optionsCollection = mongoDB.collection('options');
 
     optionsCollection.updateOne({id: "flips"}, { $set: {flips: req.body.flips}});
