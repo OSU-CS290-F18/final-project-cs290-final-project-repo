@@ -5,7 +5,6 @@ var app = express();
 var port = process.env.PORT || 3000;
 var mongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
-var gamestart = require('./gamestart');
 
 //Mongo variables
 var mongoUser = process.env.MUSER;
