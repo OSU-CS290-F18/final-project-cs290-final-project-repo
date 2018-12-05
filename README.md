@@ -3,12 +3,12 @@ If anyone notices an inconsistency between the added/deleted cards(the stored im
 
 I think I've fixed the issue but it happens kinda rarely.
 
-# Important Please Read
+# Important
 So we don't accidentally start working on the same things causing pointless work and wasted time like we did with the win modal, 
 write down what you plan to do within the next day or few hours under the todo section, so we know who plans on doing what.
 
 # Todo
-Tuesday 12/3:  Alright so the sidebar branch isn't quite ready but I need to sleep.  I don't think what I did is the best way to it either: For resetting, I propose (and implemented) that we just reload the page and save the user's settings in Mongodb.  I haven't merged Sidebar because the sidebar buttons have issues but I will on Tuesday.  If you want to go into the sidebar branch, update your mongodb with db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}]) - Josiah
+Wedensday 12/5:  Let me know if you think of anymore sidebar options (or just implement them I guess).  Today I'll work on finishing up the things I can think of that we might need:  Number of attempts counter in the win modal, consistent css styling, maybe customization, and maybe allowing user the choice of which cards to use from their array.  The sidebar branch is now in master so you have to update your mongodb with db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}]) - Josiah (I'm free all day after 11am so I'll probably just be doing this all day and finals)
 
 Tuesday, 12/4: I think that just svaing the sidebar stuff should work fine, I'm planning to create a way
 to delete a(non-default) image from the database, and then do some work on the css. 
@@ -16,6 +16,10 @@ to delete a(non-default) image from the database, and then do some work on the c
 # Mongo Setup
 The server expects the mongo database to have an `images` collection, which can be setup by running 
 `db.images.insertMany([{url:"1.jpg", default:"true", description:"An image of the number one", id:"photo1"},{url:"2.jpg", default:"true", description:"An image of the number two", id:"photo2"},{url:"3.jpg", default:"true", description:"An image of the number three", id:"photo3"},{url:"4.jpg", default:"true", description:"An image of the number four", id:"photo4"}]);`
+
+Set up an options collection as well:
+`db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}])`
+
 in the mongo shell
 
 Likewise, the server expects the environment variables `MUSER` and `MPASSWORD` to be set, and they should be your mongo username and password. 
