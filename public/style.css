@@ -272,9 +272,7 @@ while a flipped one has an image a little ways 'inside' the card */
     background-image: url("gravel.png");
     border: 1px solid gray;
     padding: 15px;
-    margin: 20px auto 5px 240px;
+    margin: 20px 80px 5px 230px;
     position: static;
-    right: 80px;
     z-index: -100;
-    max-width: 1140px;
 }

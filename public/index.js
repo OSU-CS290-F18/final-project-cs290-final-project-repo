@@ -1,5 +1,5 @@
 var numFlips = parseInt(document.getElementById('options-flips').placeholder);
-var numCards = Math.floor(document.querySelectorAll('.cardPhoto').length/numFlips);
+var numCards = Math.floor((document.querySelectorAll('.cardPhoto').length-1)/numFlips);
 var matchCounter = 0; //How many card pairs have been matched
 var flippedArray = []; //the cards during each reset period that were flipped so far
 var cardCounter  = 0;  //counts the number of cards turned before a reset
@@ -51,7 +51,8 @@ async function checkPair() {
     for (var i = 0; i < numFlips; i++) {
         flippedArray.shift();
     }
-
+    console.log("flips " + numFlips);
+    console.log("numCards: " + document.querySelectorAll('.cardPhoto').length);
     if (matchCounter >= numCards) {//check if all cards have been flipped and displays congratulations modal
         congrats.classList.toggle('hidden');
     }
