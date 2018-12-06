@@ -20,6 +20,9 @@ The server expects the mongo database to have an `images` collection, which can 
 Set up an options collection as well:
 `db.options.insertMany([{ id: "flips",  flips: 2 }, {id: "max", max: 4}])`
 
+Set up the log db:
+`db.log.insertOne({id: "best", best: 0})`
+
 in the mongo shell
 
 Likewise, the server expects the environment variables `MUSER` and `MPASSWORD` to be set, and they should be your mongo username and password. 
