@@ -149,12 +149,12 @@ app.get('/game', function(req, res) {
 });
 ////////////////////////////////
 
-app.post('/log-turn', function(req, res){
+app.post('/log-turn', async function(req, res){
   if (req.body) {
     var logCollection = mongoDB.collection('log');
 
-    logCollection.updateOne({id: "best"}, { $set: {best: req.body.best}});
-    logCollection.insertOne({id: "history", flips: req.body.flips, max: req.body.max, turnCount: req.body.turnCount});
+    await logCollection.updateOne({id: "best"}, { $set: {best: req.body.best}});
+    await logCollection.insertOne({id: "history", flips: req.body.flips, max: req.body.max, turnCount: req.body.turnCount});
     
     var logCursor = logCollection.find({});
       logCursor.toArray(function(err, logDocs){
