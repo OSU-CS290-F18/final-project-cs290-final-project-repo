@@ -205,9 +205,6 @@ function SearchCard(event){
                 if(deleteButton.classList.contains('hidden')){
                     deleteButton.classList.toggle('hidden'); //show the delete button
                 }
-               /* if(!deleted.classList.contains('hidden')){
-                    deleted.classList.toggle('hidden'); //Hide the successfully deleted message
-                }*/
                 if(!message.classList.contains('hidden')){ //hide not found message
                     message.classList.toggle('hidden');
                 }
