@@ -261,6 +261,9 @@ function saveOptions(event) {
         if(event.target.status != '200'){
             alert("There was an issue resetting");
         }
+        else{
+            Notify('Options Saved!')
+        }
     });
     
     req.send(body);

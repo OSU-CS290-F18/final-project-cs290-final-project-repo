@@ -108,7 +108,7 @@ while a flipped one has an image a little ways 'inside' the card */
     font-size: 3.5em;
     font-family: Arial;
     background-color: #AAAAAA;
-    border: none;
+    border: 1px solid black;
     padding: 15px 32px;
     text-align: center;
     display: inline-block;
@@ -239,6 +239,31 @@ while a flipped one has an image a little ways 'inside' the card */
     right: 0px;
 }
 
+#delete-card-modal-search, #add-card-modal-accept{
+    width: 70px;
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: rgb(9, 148, 9);
+    margin: 5px;
+}
+#delete-card-modal-accept {
+    width: 240px;
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: rgb(9, 148, 9);
+    margin: 5px; 
+}
+#delete-card-modal-search:hover, #add-card-modal-accept:hover, #delete-card-modal-accept:hover, #delete-card-button:hover, #add-card-button:hover{
+    background-color: rgb(9, 112, 9);
+    border: 2px solid grey;
+}
+
 #delete-card-button, #add-card-button {
     width: 70px;
     height: 100px;
@@ -250,9 +275,9 @@ while a flipped one has an image a little ways 'inside' the card */
     background-color: rgb(9, 148, 9);
 }
 
-#delete-card-button:hover, #add-card-button:hover {
-    background-color: rgb(9,112,9);
-    border: 2px solid gray;
+.not-found {
+    color: rgb(172, 5, 5);
+    font-size: 30px;
 }
 #success-container {
     position: fixed;
