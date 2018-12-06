@@ -40,6 +40,7 @@ function changeModal() {
     var bestElement = document.createElement('p');
     bestElement.setAttribute("id", "best-turn");
     bestElement.setAttribute("best-turn", best);
+    bestElement.classList.add('card-field');
     bestElement.textContent = "Best: " + best;
     modal.insertBefore(bestElement, modal.children[1]);
 }

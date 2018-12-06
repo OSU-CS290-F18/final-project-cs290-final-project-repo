@@ -146,6 +146,7 @@ while a flipped one has an image a little ways 'inside' the card */
     padding: 10px;
     border-radius: 3px;
     background-color: rgba(239,239,239,.5);
+    border: 1px solid black;
   }
 
   .options-container-boxes {
@@ -224,8 +225,14 @@ while a flipped one has an image a little ways 'inside' the card */
     cursor: pointer;
 }
 
-.congratulations-modal-body, .add-card-modal-body, .delete-card-modal-body, .log-counter-modal-body{
+.congratulations-modal-body, .add-card-modal-body, .delete-card-modal-body, {
     padding: auto 5px;
+}
+
+.log-counter-modal-body {
+    padding: auto 5px;
+    overflow: scroll;
+    max-height: 630px;
 }
 
 .congratulations-modal-body h1, .add-card-modal-body h1, .delete-card-modal-body h1, .log-counter-modal-body h1{
@@ -317,7 +324,8 @@ while a flipped one has an image a little ways 'inside' the card */
 .cardContainer {
     background-color: rgb(199, 199, 199);
     background-image: url("gravel.png");
-    border: 1px solid gray;
+    border: 1px solid black;
+    border-radius: 3px;
     padding: 15px;
     margin: 20px 80px 5px 230px;
     position: static;
@@ -351,8 +359,10 @@ while a flipped one has an image a little ways 'inside' the card */
     width: 60%;
     position:relative;
     left: 20%;
-    text-align: left;
     border-radius: 2px;
+    align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 #log-list {
@@ -372,4 +382,23 @@ while a flipped one has an image a little ways 'inside' the card */
     left: 15%;
     text-align: left;
     border-radius: 2px;
+}
+
+#sidebar-container h2{
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 37px;
+    font-family: arial;
+    color: #333333;
+    text-align: center;
+    text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
+}
+
+.card-input-bar {
+    font-size: 14px;
+    flex: 1 auto;
+    margin-left: 10px;
+    padding: 3px;
+    border: 1px solid #000000;
+    border-radius: 3px;
 }
