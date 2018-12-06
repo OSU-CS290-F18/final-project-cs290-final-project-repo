@@ -67,6 +67,7 @@ while a flipped one has an image a little ways 'inside' the card */
     height: 180px;
     width: 105px;
     margin: 7.5px;
+    cursor: pointer;
 }
 
 .card:not(.flipped):not(static):hover img{
@@ -85,7 +86,7 @@ while a flipped one has an image a little ways 'inside' the card */
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(204, 204, 204, 0.5);
+    /*background-color: rgba(204, 204, 204, 0.5);*/
     border-radius: 3px;
     
 
@@ -102,7 +103,7 @@ while a flipped one has an image a little ways 'inside' the card */
     text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
 }
 
-#play-button {
+/*#play-button {
     margin: 0 auto;
     margin-bottom: 50px;
     font-size: 3.5em;
@@ -121,6 +122,12 @@ while a flipped one has an image a little ways 'inside' the card */
 #play-button:hover {
     -webkit-box-shadow: 10px 10px 15px 5px rgba(0,0,0,0.2); 
     box-shadow: 10px 10px 15px 5px rgba(0,0,0,0.2);
+}*/
+
+#play-button {
+    width: 300px;
+    height: 70px;
+    font-size: 40px;
 }
 
 .content {
@@ -189,16 +196,16 @@ while a flipped one has an image a little ways 'inside' the card */
     display: none;
 }
 
-.congratulations-modal-content, .add-card-modal-content, .delete-card-modal-content, .log-counter-modal-content{
+.congratulations-modal-content, .add-card-modal-content, .delete-card-modal-content, .log-counter-modal-content, #start-box-container{
     width: auto;
     max-width: 600px;
     min-width: 350px;
     min-height: 100px;
     margin: 40px auto;    
-    background-color: rgb(239, 239, 239);
+    background-color: rgba(239,239,239,.9);
     border-radius: 3px;
-    border: 4px solid #333333;
-    text-align: center;  
+    text-align: center; 
+    border: 1px solid black; 
 }
 
 .congratulations-modal-header, .add-card-modal-header, .delete-card-modal-header, .log-counter-modal-header {
@@ -259,7 +266,8 @@ while a flipped one has an image a little ways 'inside' the card */
     background-color: rgb(9, 148, 9);
     margin: 5px; 
 }
-#delete-card-modal-search:hover, #add-card-modal-accept:hover, #delete-card-modal-accept:hover, #delete-card-button:hover, #add-card-button:hover, #log-counter-button:hover{
+
+#delete-card-modal-search:hover, #add-card-modal-accept:hover, #delete-card-modal-accept:hover, #delete-card-button:hover, #add-card-button:hover, .sidebar-button:hover, #log-counter-button:hover{
     background-color: rgb(9, 112, 9);
     border: 2px solid grey;
 }
@@ -314,4 +322,35 @@ while a flipped one has an image a little ways 'inside' the card */
     margin: 20px 80px 5px 230px;
     position: static;
     z-index: -100;
+}
+
+.sidebar-button {
+    width: 180px;
+    height: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: rgb(9, 148, 9);
+    margin: 5px;
+}
+
+.options-container-boxes {
+    background-color: rgba(110, 110, 110, 0.5);
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 2px;
+    width: 180px;
+}
+
+.card-field{
+    margin: 5px;
+    background-color:rgba(110, 110, 110, 0.5);
+    border: 1px solid black;
+    padding: 5px;
+    width: 60%;
+    position:relative;
+    left: 20%;
+    text-align: left;
+    border-radius: 2px;
 }
