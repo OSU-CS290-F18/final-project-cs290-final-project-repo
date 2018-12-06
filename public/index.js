@@ -4,12 +4,44 @@ var matchCounter = 0; //How many card pairs have been matched
 var flippedArray = []; //the cards during each reset period that were flipped so far
 var cardCounter  = 0;  //counts the number of cards turned before a reset
 var running = 0; //running makes sure the FlipCard function is only run once the previous one finishes(otherwise it can result in issues with the enlarge/darkening)
+var best = parseInt(document.getElementById('best-turn').getAttribute('best-turn'));
 
 var congrats = document.getElementById('congratulations-modal');//grabs congratulation pop up html contnent
 
 //Copied sleep function from flaviocopes.com
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+function updateLog() {
+    var req = new XMLHttpRequest();
+    req.open('POST', '/log-turn');
+    var body = JSON.stringify({
+        flips: numFlips,
+        max: numCards,
+        best: best,
+        turnCount: cardCounter
+    });
+
+    req.setRequestHeader('Content-Type', 'application/json');
+    //Listen for response from the server
+    req.addEventListener('load', function(event){
+        if(event.target.status != '200'){
+            alert("There was an issue updating the log");
+        }
+    });
+    req.send(body);
+
+}
+
+function changeModal() {
+    document.getElementById('best-turn').remove();
+    var modal = document.getElementById('log-body');
+    var bestElement = document.createElement('p');
+    bestElement.setAttribute("id", "best-turn");
+    bestElement.setAttribute("best-turn", best);
+    bestElement.textContent = "Best: " + best;
+    modal.insertBefore(bestElement, modal.children[1]);
 }
 
 //for await to work, the funciton must be marked as asyncronous
@@ -54,6 +86,21 @@ async function checkPair() {
     console.log("flips " + numFlips);
     console.log("numCards: " + document.querySelectorAll('.cardPhoto').length);
     if (matchCounter >= numCards) {//check if all cards have been flipped and displays congratulations modal
+        if (best === 0 || cardCounter < best) {
+            best = cardCounter;
+        }
+        var logContent = {
+            flips: numFlips,
+            max: numCards,
+            best: best,
+            turnCount: cardCounter
+        };
+    
+        var logSection = document.getElementById('log-list');
+    
+        logSection.insertAdjacentHTML('beforeend', Handlebars.templates.logPoint(logContent));
+        changeModal();
+        updateLog();
         congrats.classList.toggle('hidden');
     }
 }
@@ -277,9 +324,11 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     var closeCongratsModal = document.getElementById('congratulations-modal-close');//closes congratulations modal upon clicking exit
-    closeCongratsModal.addEventListener('click', function(event) {
-        congrats.classList.toggle('hidden');
-    });
+    if (closeCongratsModal) {
+        closeCongratsModal.addEventListener('click', function(event) {
+            congrats.classList.toggle('hidden');
+        });
+    }
 
     var addCard = document.getElementById('add-card-modal');
     var cardButton = document.getElementById('add-card-button');
@@ -290,7 +339,18 @@ window.addEventListener('DOMContentLoaded', function () {
     var closeDeleteModal = document.getElementById('delete-card-modal-close');
     var acceptCardModal = document.getElementById('add-card-modal-accept');
     var searchCards = document.getElementById('delete-card-modal-search');
+    var logCounterModal = document.getElementById('log-counter-modal');
+    var logCounterButton = document.getElementById('log-counter-button');
+    var closeCounterModal = document.getElementById('log-counter-modal-close');
 
+    if (logCounterButton) {
+        logCounterButton.addEventListener('click', function(event) {
+            logCounterModal.classList.toggle('hidden');
+        });
+        closeCounterModal.addEventListener('click', function(event) {
+            logCounterModal.classList.toggle('hidden');
+        });
+    }
     if(cardButton){
         cardButton.addEventListener('click',function(event){
             addCard.classList.toggle('hidden');

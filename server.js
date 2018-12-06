@@ -16,6 +16,7 @@ var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost 
 var mongoDB;
 var images;
 var options;
+var log;
 
 //GenerateRand creates an array of random numbers of size amount from 0 to max-1, with no repeated numbers. 
 //Useful for getting random photos from MongoDB and arranging the photos randomly
@@ -92,8 +93,21 @@ app.delete('/deleteCard', async function(req, res){
 app.get('/game', function(req, res) {
   res.statusCode = 200;
     var numCards = images.length; 
-    var numFlips = options[0].flips; ////////////////////
+    var numFlips = options[0].flips;
     var maxNumCards = options[1].max; //Determines the max number of card pairings that are set up
+    var logHistory = log.slice(0);
+    
+    var best = log[0].best;
+    logHistory.shift();
+    var logArray = [];
+    for (var i = 0; i < logHistory.length; i++) {
+        logArray.push({
+          flips: logHistory[i].flips,
+          max: logHistory[i].max,
+          turnCount: logHistory[i].turnCount,
+        });
+    }
+    
     var ar = [];  
     var i = 0;
     var random = GenerateRand(numCards * numFlips, numCards*numFlips);
@@ -124,17 +138,41 @@ app.get('/game', function(req, res) {
     });
       i++;  
     }
-
     res.render('game', {
     cardInfo: ar,
     flips: numFlips,
-    maxCards: maxNumCards
+    maxCards: maxNumCards,
+    logHistory: logArray,
+    best: best
     });
   
 });
 ////////////////////////////////
 
+app.post('/log-turn', function(req, res){
+  if (req.body) {
+    var logCollection = mongoDB.collection('log');
 
+    logCollection.updateOne({id: "best"}, { $set: {best: req.body.best}});
+    logCollection.insertOne({id: "history", flips: req.body.flips, max: req.body.max, turnCount: req.body.turnCount});
+    
+    var logCursor = logCollection.find({});
+      logCursor.toArray(function(err, logDocs){
+      if(err){
+        throw err;
+      }
+      else{
+        log = logDocs;
+     }
+    });
+
+    res.status(200).send('Log was updated');
+  }
+  else{
+    res.status(400).send('missing required fields');
+   
+  }
+});
 
 app.post('/save', function(req, res){
   if (req.body && req.body.flips && req.body.max) {
@@ -229,9 +267,20 @@ mongoClient.connect(mongoURL, function(err, client){
             }
             else{
               options = optionsDocs;
+    }
+  });
+
+  var logCollection = mongoDB.collection('log');
+  var logCursor = logCollection.find({});
+  logCursor.toArray(function(err, logDocs){
+            if(err){
+              throw err;
             }
-          });
-          ///////////////////////////
+            else{
+              log = logDocs;
+    }
+  });
+  ///////////////////////////
   //start the server
   app.listen(port, function () {
     console.log("== Server is listening on port", port);
