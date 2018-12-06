@@ -1,0 +1,20 @@
+<div id="log-counter-modal" class="hidden">
+    <div class="log-counter-modal-content">
+
+        <div class="log-counter-modal-header">
+         <button type="button" id="log-counter-modal-close" class="log-counter-modal-exit">&times;</button>
+        </div>
+
+        <div id="log-body" class="log-counter-modal-body">
+            <h1>Previous Games:</h1>
+            <p id="best-turn" best-turn="{{best}}">Best: {{best}}</p>
+            <ol id="log-list">
+                {{#each logHistory}}
+                    {{>logPoint}}
+                {{/each}}
+            </ol>
+        </div>
+
+          
+    </div>
+</div>
