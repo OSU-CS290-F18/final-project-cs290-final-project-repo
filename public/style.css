@@ -176,7 +176,7 @@ while a flipped one has an image a little ways 'inside' the card */
 
 
 /*Congratulations Modal*/
-#congratulations-modal, #add-card-modal, #delete-card-modal{
+#congratulations-modal, #add-card-modal, #delete-card-modal, #log-counter-modal{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -189,7 +189,7 @@ while a flipped one has an image a little ways 'inside' the card */
     display: none;
 }
 
-.congratulations-modal-content, .add-card-modal-content, .delete-card-modal-content{
+.congratulations-modal-content, .add-card-modal-content, .delete-card-modal-content, .log-counter-modal-content{
     width: auto;
     max-width: 600px;
     min-width: 350px;
@@ -201,12 +201,12 @@ while a flipped one has an image a little ways 'inside' the card */
     text-align: center;  
 }
 
-.congratulations-modal-header, .add-card-modal-header, .delete-card-modal-header {
+.congratulations-modal-header, .add-card-modal-header, .delete-card-modal-header, .log-counter-modal-header {
     position: relative;
     padding: 10px 20px;
 }
 
-#congratulations-modal-close, #add-card-modal-close, #delete-card-modal-close{
+#congratulations-modal-close, #add-card-modal-close, #delete-card-modal-close, #log-counter-modal-close{
     position: absolute;
     right: 10px;
     top: 5px;
@@ -217,11 +217,11 @@ while a flipped one has an image a little ways 'inside' the card */
     cursor: pointer;
 }
 
-.congratulations-modal-body, .add-card-modal-body, .delete-card-modal-body {
+.congratulations-modal-body, .add-card-modal-body, .delete-card-modal-body, .log-counter-modal-body{
     padding: auto 5px;
 }
 
-.congratulations-modal-body h1, .add-card-modal-body h1, .delete-card-modal-body h1{
+.congratulations-modal-body h1, .add-card-modal-body h1, .delete-card-modal-body h1, .log-counter-modal-body h1{
     font-size: 3.5em;
     font-family: arial;
     color: #333333;
@@ -259,7 +259,7 @@ while a flipped one has an image a little ways 'inside' the card */
     background-color: rgb(9, 148, 9);
     margin: 5px; 
 }
-#delete-card-modal-search:hover, #add-card-modal-accept:hover, #delete-card-modal-accept:hover, #delete-card-button:hover, #add-card-button:hover{
+#delete-card-modal-search:hover, #add-card-modal-accept:hover, #delete-card-modal-accept:hover, #delete-card-button:hover, #add-card-button:hover, #log-counter-button:hover{
     background-color: rgb(9, 112, 9);
     border: 2px solid grey;
 }
@@ -273,6 +273,20 @@ while a flipped one has an image a little ways 'inside' the card */
     border-top-left-radius: 10px;
     border: 1px solid grey;
     background-color: rgb(9, 148, 9);
+}
+
+#log-counter-button {
+    width: 70px;
+    height: 40px;
+    font-size: 30px;
+    cursor: pointer;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border: 1px solid grey;
+    background-color: rgb(9, 148, 9);
+    position: fixed;
+    top: 200px;
+    right: 0px;
 }
 
 .not-found {

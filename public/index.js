@@ -277,9 +277,11 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     var closeCongratsModal = document.getElementById('congratulations-modal-close');//closes congratulations modal upon clicking exit
-    closeCongratsModal.addEventListener('click', function(event) {
-        congrats.classList.toggle('hidden');
-    });
+    if (closeCongratsModal) {
+        closeCongratsModal.addEventListener('click', function(event) {
+            congrats.classList.toggle('hidden');
+        });
+    }
 
     var addCard = document.getElementById('add-card-modal');
     var cardButton = document.getElementById('add-card-button');
@@ -290,7 +292,18 @@ window.addEventListener('DOMContentLoaded', function () {
     var closeDeleteModal = document.getElementById('delete-card-modal-close');
     var acceptCardModal = document.getElementById('add-card-modal-accept');
     var searchCards = document.getElementById('delete-card-modal-search');
+    var logCounterModal = document.getElementById('log-counter-modal');
+    var logCounterButton = document.getElementById('log-counter-button');
+    var closeCounterModal = document.getElementById('log-counter-modal-close');
 
+    if (logCounterButton) {
+        logCounterButton.addEventListener('click', function(event) {
+            logCounterModal.classList.toggle('hidden');
+        });
+        closeCounterModal.addEventListener('click', function(event) {
+            logCounterModal.classList.toggle('hidden');
+        });
+    }
     if(cardButton){
         cardButton.addEventListener('click',function(event){
             addCard.classList.toggle('hidden');
