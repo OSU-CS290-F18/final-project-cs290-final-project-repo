@@ -3,10 +3,6 @@ body{
     background-image: url("http://blog.hostbaby.com/wp-content/uploads/2014/03/Trees_1920x1234.png")
 }
 
-.cardContainer{
-    padding: 60px;
-    display: block;
-}
 .card{
     display: inline-block;
     vertical-align: top;
@@ -139,8 +135,7 @@ while a flipped one has an image a little ways 'inside' the card */
     height: 100%;
     position: fixed;
     overflow-x: hidden;
-    
-    margin: 10px 20px auto 10px;
+    margin: 0px 20px auto 10px;
     padding: 10px;
     border-radius: 3px;
     background-color: rgba(239,239,239,.5);
@@ -276,10 +271,10 @@ while a flipped one has an image a little ways 'inside' the card */
     background-color: rgb(199, 199, 199);
     background-image: url("gravel.png");
     border: 1px solid gray;
-    padding: 20px;
-    margin: 5px;
-    position: fixed;
-    left: 220px;
+    padding: 15px;
+    margin: 20px auto 5px 240px;
+    position: static;
     right: 80px;
     z-index: -100;
+    max-width: 1140px;
 }
