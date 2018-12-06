@@ -5,10 +5,13 @@
          <button type="button" id="log-counter-modal-close" class="log-counter-modal-exit">&times;</button>
         </div>
 
-        <div class="log-counter-modal-body">
+        <div id="log-body" class="log-counter-modal-body">
             <h1>Previous Games:</h1>
-            <ol>
-                <li></li>
+            <p id="best-turn" best-turn="{{best}}">Best: {{best}}</p>
+            <ol id="log-list">
+                {{#each logHistory}}
+                    {{>logPoint}}
+                {{/each}}
             </ol>
         </div>
 
