@@ -354,3 +354,22 @@ while a flipped one has an image a little ways 'inside' the card */
     text-align: left;
     border-radius: 2px;
 }
+
+#log-list {
+    text-align: left;
+}
+#log-list ol{
+    text-align: left;
+}
+
+.log-field {
+    margin: 5px;
+    background-color:rgba(110, 110, 110, 0.5);
+    border: 1px solid black;
+    padding: 5px;
+    width: 60%;
+    position:relative;
+    left: 15%;
+    text-align: left;
+    border-radius: 2px;
+}
